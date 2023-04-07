@@ -1,0 +1,138 @@
+@mixin players-home-grid
+  display: grid
+  grid-template-columns: auto auto
+  justify-content: space-around
+  align-content: space-around
+  padding: 20px
+@mixin home-players
+  width: 50px
+  height: 50px
+  border-radius: 50%
+  display: flex
+  justify-content: center
+  align-items: center
+@mixin stock
+  width: 30px
+  height: 30px
+  border: solid white 4px
+  border-radius: 50%
+
+
+.App
+  text-align: center
+  box-sizing: border-box
+
+.game-page
+  height: 100vh
+  display: flex
+  justify-content: center
+  align-items: center
+  .start-page
+    position: absolute
+    background-color: rgba(0,0,0, 0.8)
+    top: 0
+    left: 0
+    bottom: 0
+    right: 0
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    h1
+      color: white
+    .start-buttons
+      width: 100px
+      display: flex
+      justify-content: space-between
+      button
+        cursor: pointer
+  .game-board
+    position: relative
+    width: 700px
+    height: 700px
+    display: grid
+    grid-template-columns: 20% 20% 20% 20% 20%
+    grid-template-rows: 20% 20% 20% 20% 20%
+    grid-template-areas: 'player1-box player1-box top-box player2-box player2-box' 'player1-box player1-box top-box player2-box player2-box' 'left-box left-box . right-box right-box' 'player3-box player3-box bottom-box player4-box player4-box' 'player3-box player3-box bottom-box player4-box player4-box'
+    .player1-box
+      grid-area: player1-box
+      border: solid 40px gold
+      @include players-home-grid
+      div.hole
+        background-color: gold
+        @include home-players
+        div
+          @include stock
+          background-color: gold
+    .top-box
+      grid-area: top-box
+      display: grid
+      grid-template-columns: 1fr 1fr 1fr
+      div
+        border: solid 1px black
+      div:nth-child(6), div:nth-child(3n + 5)
+        background-color: red
+    .player2-box
+      grid-area: player2-box
+      border: solid 40px red
+      @include players-home-grid
+      div.hole
+        background-color: red
+        @include home-players
+        div
+          @include stock
+          background-color: red
+    .left-box
+      grid-area: left-box
+      display: grid
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr
+      div
+        border: solid 1px black
+      div:nth-child(2), div:nth-child(8), div:nth-child(9), div:nth-child(10), div:nth-child(11), div:nth-child(12)
+        background-color: gold
+    .dice-box
+      border-left: 70px solid gold
+      border-top: 70px solid red
+      border-right: 70px solid SpringGreen
+      border-bottom: 70px solid blue
+      position: absolute
+      top: 50%
+      left: 50%
+      transform: translate(-50%, -50%)
+    .right-box
+      grid-area: right-box
+      display: grid
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr
+      div
+        border: solid 1px black
+      div:nth-child(7), div:nth-child(8), div:nth-child(9), div:nth-child(10), div:nth-child(11), div:nth-child(17)
+        background-color: SpringGreen
+    .player3-box
+      grid-area: player3-box
+      border: solid 40px blue
+      @include players-home-grid
+      div.hole
+        background-color: blue
+        @include home-players
+        div
+          @include stock
+          background-color: blue
+    .bottom-box
+      grid-area: bottom-box
+      display: grid
+      grid-template-columns: 1fr 1fr 1fr
+      div
+        border: solid 1px black
+      div:nth-child(13), div:nth-child(3n + 2):not(div:nth-child(17))
+        background-color: blue
+    .player4-box
+      grid-area: player4-box
+      border: solid 40px SpringGreen
+      @include players-home-grid
+      div.hole
+        background-color: SpringGreen
+        @include home-players
+        div
+          @include stock
+          background-color: springgreen
+
+
