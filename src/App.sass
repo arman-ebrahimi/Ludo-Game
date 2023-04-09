@@ -98,6 +98,18 @@
       top: 50%
       left: 50%
       transform: translate(-50%, -50%)
+      .dice
+        position: absolute
+        top: 50%
+        left: 50%
+        transform: translate(-50%, -50%)
+        font-size: 3.3em
+        cursor: pointer
+        transition: transform 1s
+      .rotate-right
+        transform: translate(-50%, -50%) rotate(360deg)
+      .disabled-dice
+        pointer-events: none
     .right-box
       grid-area: right-box
       display: grid
