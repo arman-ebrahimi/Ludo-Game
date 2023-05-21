@@ -11,11 +11,24 @@
   display: flex
   justify-content: center
   align-items: center
+  border: none
+  cursor: pointer
 @mixin stock
   width: 30px
   height: 30px
   border: solid white 4px
   border-radius: 50%
+  color: white
+  display: flex
+  justify-content: center
+  align-items: center
+  font-weight: bold
+@mixin entry
+  border: solid 1px black
+  color: rgba(0, 0, 0, 0.3)
+  display: flex
+  align-items: center
+  justify-content: center
 
 
 .App
@@ -52,15 +65,15 @@
     display: grid
     grid-template-columns: 20% 20% 20% 20% 20%
     grid-template-rows: 20% 20% 20% 20% 20%
-    grid-template-areas: 'player1-box player1-box top-box player2-box player2-box' 'player1-box player1-box top-box player2-box player2-box' 'left-box left-box . right-box right-box' 'player3-box player3-box bottom-box player4-box player4-box' 'player3-box player3-box bottom-box player4-box player4-box'
+    grid-template-areas: 'player1-box player1-box top-box player2-box player2-box' 'player1-box player1-box top-box player2-box player2-box' 'left-box left-box . right-box right-box' 'player4-box player4-box bottom-box player3-box player3-box' 'player4-box player4-box bottom-box player3-box player3-box'
     .player1-box
       grid-area: player1-box
       border: solid 40px gold
       @include players-home-grid
-      div.hole
+      button.hole
         background-color: gold
         @include home-players
-        div
+        div.stock
           @include stock
           background-color: gold
     .top-box
@@ -68,17 +81,21 @@
       display: grid
       grid-template-columns: 1fr 1fr 1fr
       div
-        border: solid 1px black
+        @include entry
+        div.entry-stock
+          @include stock
+          position: absolute
+          background-color: red
       div:nth-child(6), div:nth-child(3n + 5)
         background-color: red
     .player2-box
       grid-area: player2-box
       border: solid 40px red
       @include players-home-grid
-      div.hole
+      button.hole
         background-color: red
         @include home-players
-        div
+        div.stock
           @include stock
           background-color: red
     .left-box
@@ -86,7 +103,11 @@
       display: grid
       grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr
       div
-        border: solid 1px black
+        @include entry
+        div.entry-stock
+          @include stock
+          position: absolute
+          background-color: gold
       div:nth-child(2), div:nth-child(8), div:nth-child(9), div:nth-child(10), div:nth-child(11), div:nth-child(12)
         background-color: gold
     .dice-box
@@ -115,17 +136,21 @@
       display: grid
       grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr
       div
-        border: solid 1px black
+        @include entry
+        div.entry-stock
+          @include stock
+          position: absolute
+          background-color: blue
       div:nth-child(7), div:nth-child(8), div:nth-child(9), div:nth-child(10), div:nth-child(11), div:nth-child(17)
         background-color: SpringGreen
     .player3-box
       grid-area: player3-box
       border: solid 40px blue
       @include players-home-grid
-      div.hole
+      button.hole
         background-color: blue
         @include home-players
-        div
+        div.stock
           @include stock
           background-color: blue
     .bottom-box
@@ -133,17 +158,21 @@
       display: grid
       grid-template-columns: 1fr 1fr 1fr
       div
-        border: solid 1px black
+        @include entry
+        div.entry-stock
+          @include stock
+          position: absolute
+          background-color: seagreen
       div:nth-child(13), div:nth-child(3n + 2):not(div:nth-child(17))
         background-color: blue
     .player4-box
       grid-area: player4-box
       border: solid 40px SpringGreen
       @include players-home-grid
-      div.hole
+      button.hole
         background-color: SpringGreen
         @include home-players
-        div
+        div.stock
           @include stock
           background-color: springgreen
 
