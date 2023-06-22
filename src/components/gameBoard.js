@@ -35,6 +35,14 @@ export const GameBoard = () => {
         const randomRoll = diceArray[Math.floor(Math.random() * diceArray.length)];
         setTimeout(() => {
             setDice({number: randomRoll, rotateRight: !dice.rotateRight, isRolling: false})
+            if(randomRoll !== "six" && allStocks[manageStocks[`${currentPlayer}`]].length === 0){
+                if(currentPlayer === 4){
+                    setCurrentPlayer(1)
+                }
+                else {
+                    setCurrentPlayer(currentPlayer + 1)
+                }
+            }
         }, 1000)
     }
     const handleClickOnStock = (e) => {
