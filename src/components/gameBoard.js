@@ -53,48 +53,108 @@ export const GameBoard = () => {
         }
         else if(currentPlayer === 2 && dice.number === "six"){
             e.target.style.display = "none";
-            setAllStocks({...allStocks, player2: [...allStocks.player1, 2]})
+            setAllStocks({...allStocks, player2: [...allStocks.player2, 2]})
             setDice({...dice, number: "one"})
         }
         else if(currentPlayer === 3 && dice.number === "six"){
             e.target.style.display = "none";
-            setAllStocks({...allStocks, player3: [...allStocks.player1, 15]})
+            setAllStocks({...allStocks, player3: [...allStocks.player3, 15]})
             setDice({...dice, number: "one"})
         }
         else if(currentPlayer === 4 && dice.number === "six"){
             e.target.style.display = "none";
-            setAllStocks({...allStocks, player4: [...allStocks.player1, 28]})
+            setAllStocks({...allStocks, player4: [...allStocks.player4, 28]})
             setDice({...dice, number: "one"})
         }
     }
     const moveStock = (e, item) => {
         const stockPosition = allStocks[manageStocks[`${currentPlayer}`]].indexOf(item);
         if(currentPlayer === 1){
-            let newArray = allStocks.player1;
-            newArray[stockPosition] += diceNumber[dice.number];
-            setAllStocks({...allStocks, player1: newArray})
+            let counter = 1;
+            const interval = setInterval(() => {
+                if(counter <= diceNumber[dice.number]){
+                    const audio = new Audio("/move.wav");
+                    audio.play().then();
+                    let newArray = allStocks.player1;
+                    newArray[stockPosition] ++;
+                    if(newArray[stockPosition] > 52){
+                        newArray[stockPosition] -= 52;
+                    }
+                    setAllStocks({...allStocks, player1: newArray})
+                    counter ++;
+                }
+                else {
+                    clearInterval(interval)
+                }
+            }, 200)
         }
         else if(currentPlayer === 2){
-            let newArray = allStocks.player2;
-            newArray[stockPosition] += diceNumber[dice.number];
-            setAllStocks({...allStocks, player2: newArray})
+            let counter = 1;
+            const interval = setInterval(() => {
+                if(counter <= diceNumber[dice.number]){
+                    const audio = new Audio("/move.wav");
+                    audio.play().then();
+                    let newArray = allStocks.player2;
+                    newArray[stockPosition] ++;
+                    if(newArray[stockPosition] > 52){
+                        newArray[stockPosition] -= 52;
+                    }
+                    setAllStocks({...allStocks, player2: newArray})
+                    counter ++;
+                }
+                else {
+                    clearInterval(interval)
+                }
+            }, 200)
         }
         else if(currentPlayer === 3){
-            let newArray = allStocks.player3;
-            newArray[stockPosition] += diceNumber[dice.number];
-            setAllStocks({...allStocks, player3: newArray})
+            let counter = 1;
+            const interval = setInterval(() => {
+                if(counter <= diceNumber[dice.number]){
+                    const audio = new Audio("/move.wav");
+                    audio.play().then();
+                    let newArray = allStocks.player3;
+                    newArray[stockPosition] ++;
+                    if(newArray[stockPosition] > 52){
+                        newArray[stockPosition] -= 52;
+                    }
+                    setAllStocks({...allStocks, player3: newArray})
+                    counter ++;
+                }
+                else{
+                    clearInterval(interval)
+                }
+            }, 200)
         }
         else{
-            let newArray = allStocks.player4;
-            newArray[stockPosition] += diceNumber[dice.number];
-            setAllStocks({...allStocks, player4: newArray})
+            let counter = 1;
+            const interval = setInterval(() => {
+                if(counter <= diceNumber[dice.number]){
+                    const audio = new Audio("/move.wav");
+                    audio.play().then();
+                    let newArray = allStocks.player4;
+                    newArray[stockPosition] ++;
+                    if(newArray[stockPosition] > 52){
+                        newArray[stockPosition] -= 52;
+                    }
+                    setAllStocks({...allStocks, player4: newArray})
+                    counter ++;
+                }
+                else {
+                    clearInterval(interval)
+                }
+            }, 500)
         }
-        if(currentPlayer === 4){
-            setCurrentPlayer(1)
+
+        if(dice.number !== "six"){
+            if(currentPlayer === 4){
+                setCurrentPlayer(1)
+            }
+            else {
+                setCurrentPlayer(currentPlayer + 1)
+            }
         }
-        else {
-            setCurrentPlayer(currentPlayer + 1)
-        }
+
     }
     return(
         <>
