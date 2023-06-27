@@ -69,81 +69,75 @@ export const GameBoard = () => {
     }
     const moveStock = (e, item) => {
         const stockPosition = allStocks[manageStocks[`${currentPlayer}`]].indexOf(item);
-        if(currentPlayer === 1){
+        function moveFunction(x){
             let counter = 1;
             const interval = setInterval(() => {
                 if(counter <= diceNumber[dice.number]){
                     const audio = new Audio("/move.wav");
                     audio.play().then();
-                    let newArray = allStocks.player1;
-                    newArray[stockPosition] ++;
-                    if(newArray[stockPosition] > 52){
-                        newArray[stockPosition] -= 52;
+                    let newArray = allStocks[`player${x}`];
+                    if(x === 1 && newArray[stockPosition] === 39){
+                        newArray[stockPosition] = "Y1";
                     }
-                    setAllStocks({...allStocks, player1: newArray})
+                    else if(x === 1 && isNaN(newArray[stockPosition])){
+                        newArray[stockPosition] = "Y" + (Number(newArray[stockPosition].substr(1,1)) + 1);
+                    }
+                    else if(x === 2 && newArray[stockPosition] === 52){
+                        newArray[stockPosition] = "R1";
+                    }
+                    else if(x === 2 && isNaN(newArray[stockPosition])){
+                        newArray[stockPosition] = "R" + (Number(newArray[stockPosition].substr(1,1)) + 1);
+                    }
+                    else if(x === 3 && newArray[stockPosition] === 13){
+                        newArray[stockPosition] = "B1";
+                    }
+                    else if(x === 3 && isNaN(newArray[stockPosition])){
+                        newArray[stockPosition] = "B" + (Number(newArray[stockPosition].substr(1,1)) + 1);
+                    }
+                    else if(x === 4 && newArray[stockPosition] === 26){
+                        newArray[stockPosition] = "G1";
+                    }
+                    else if(x === 4 && isNaN(newArray[stockPosition])){
+                        newArray[stockPosition] = "G" + (Number(newArray[stockPosition].substr(1,1)) + 1);
+                    }
+                    else {
+                        newArray[stockPosition] ++;
+                        if(newArray[stockPosition] > 52){
+                            newArray[stockPosition] -= 52;
+                        }
+                    }
+
+                    if(x === 1){
+                        setAllStocks({...allStocks, player1: newArray})
+                    }
+                    else if(x === 2){
+                        setAllStocks({...allStocks, player2: newArray})
+                    }
+                    else if(x === 3){
+                        setAllStocks({...allStocks, player3: newArray})
+                    }
+                    else if(x === 4){
+                        setAllStocks({...allStocks, player4: newArray})
+                    }
                     counter ++;
                 }
                 else {
                     clearInterval(interval)
                 }
             }, 200)
+        }
+
+        if(currentPlayer === 1){
+            moveFunction(1);
         }
         else if(currentPlayer === 2){
-            let counter = 1;
-            const interval = setInterval(() => {
-                if(counter <= diceNumber[dice.number]){
-                    const audio = new Audio("/move.wav");
-                    audio.play().then();
-                    let newArray = allStocks.player2;
-                    newArray[stockPosition] ++;
-                    if(newArray[stockPosition] > 52){
-                        newArray[stockPosition] -= 52;
-                    }
-                    setAllStocks({...allStocks, player2: newArray})
-                    counter ++;
-                }
-                else {
-                    clearInterval(interval)
-                }
-            }, 200)
+            moveFunction(2);
         }
         else if(currentPlayer === 3){
-            let counter = 1;
-            const interval = setInterval(() => {
-                if(counter <= diceNumber[dice.number]){
-                    const audio = new Audio("/move.wav");
-                    audio.play().then();
-                    let newArray = allStocks.player3;
-                    newArray[stockPosition] ++;
-                    if(newArray[stockPosition] > 52){
-                        newArray[stockPosition] -= 52;
-                    }
-                    setAllStocks({...allStocks, player3: newArray})
-                    counter ++;
-                }
-                else{
-                    clearInterval(interval)
-                }
-            }, 200)
+            moveFunction(3);
         }
         else{
-            let counter = 1;
-            const interval = setInterval(() => {
-                if(counter <= diceNumber[dice.number]){
-                    const audio = new Audio("/move.wav");
-                    audio.play().then();
-                    let newArray = allStocks.player4;
-                    newArray[stockPosition] ++;
-                    if(newArray[stockPosition] > 52){
-                        newArray[stockPosition] -= 52;
-                    }
-                    setAllStocks({...allStocks, player4: newArray})
-                    counter ++;
-                }
-                else {
-                    clearInterval(interval)
-                }
-            }, 500)
+            moveFunction(4);
         }
 
         if(dice.number !== "six"){
@@ -154,8 +148,8 @@ export const GameBoard = () => {
                 setCurrentPlayer(currentPlayer + 1)
             }
         }
-
     }
+
     return(
         <>
             <div className="game-board">
@@ -165,7 +159,7 @@ export const GameBoard = () => {
                     })}
                 </div>
                 <div className="top-box">
-                    {[51, 52, 1, 50, "", 2, 49, "", 3, 48, "", 4, 47, "", 5, 46, "", 6].map((item, index) => {
+                    {[51, 52, 1, 50, "R1", 2, 49, "R2", 3, 48, "R3", 4, 47, "R4", 5, 46, "R5", 6].map((item, index) => {
                         return <div key={index}><Entry number={item} className="entry-stock" onClick={(e) => moveStock(e, item)}></Entry>{item}</div>
                     })}
                 </div>
@@ -175,7 +169,7 @@ export const GameBoard = () => {
                     })}
                 </div>
                 <div className="left-box">
-                    {[40, 41, 42, 43, 44, 45, 39, "", "", "", "", "", 38, 37, 36, 35, 34, 33].map((item, index) => {
+                    {[40, 41, 42, 43, 44, 45, 39, "Y1", "Y2", "Y3", "Y4", "Y5", 38, 37, 36, 35, 34, 33].map((item, index) => {
                         return <div key={index}><Entry number={item} className="entry-stock" onClick={(e) => moveStock(e, item)}></Entry>{item}</div>
                     })}
                 </div>
@@ -183,7 +177,7 @@ export const GameBoard = () => {
                     <div className={`dice fa fa-dice-${dice.number} ${dice.rotateRight && "rotate-right"} ${dice.isRolling && "disabled-dice"}`} onClick={rollDice}></div>
                 </div>
                 <div className="right-box">
-                    {[7, 8, 9, 10, 11, 12, "", "", "", "", "", 13, 19, 18, 17, 16, 15, 14].map((item, index) => {
+                    {[7, 8, 9, 10, 11, 12, "B5", "B4", "B3", "B2", "B1", 13, 19, 18, 17, 16, 15, 14].map((item, index) => {
                         return <div key={index}><Entry number={item} className="entry-stock" onClick={(e) => moveStock(e, item)}></Entry>{item}</div>
                     })}
                 </div>
@@ -193,7 +187,7 @@ export const GameBoard = () => {
                     })}
                 </div>
                 <div className="bottom-box">
-                    {[32, "", 20, 31, "", 21, 30, "", 22, 29, "", 23, 28, "", 24, 27, 26, 25].map((item, index) => {
+                    {[32, "G5", 20, 31, "G4", 21, 30, "G3", 22, 29, "G2", 23, 28, "G1", 24, 27, 26, 25].map((item, index) => {
                         return <div key={index}><Entry number={item} className="entry-stock" onClick={(e) => moveStock(e, item)}></Entry>{item}</div>
                     })}
                 </div>
