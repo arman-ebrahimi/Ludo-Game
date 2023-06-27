@@ -46,22 +46,22 @@ export const GameBoard = () => {
         }, 1000)
     }
     const handleClickOnStock = (e) => {
-        if(currentPlayer === 1 && dice.number === "six"){
+        if(currentPlayer === 1 && dice.number === "six" && e.target.id === "1"){
             e.target.style.display = "none";
             setAllStocks({...allStocks, player1: [...allStocks.player1, 41]})
             setDice({...dice, number: "one"})
         }
-        else if(currentPlayer === 2 && dice.number === "six"){
+        else if(currentPlayer === 2 && dice.number === "six" && e.target.id === "2"){
             e.target.style.display = "none";
             setAllStocks({...allStocks, player2: [...allStocks.player2, 2]})
             setDice({...dice, number: "one"})
         }
-        else if(currentPlayer === 3 && dice.number === "six"){
+        else if(currentPlayer === 3 && dice.number === "six" && e.target.id === "3"){
             e.target.style.display = "none";
             setAllStocks({...allStocks, player3: [...allStocks.player3, 15]})
             setDice({...dice, number: "one"})
         }
-        else if(currentPlayer === 4 && dice.number === "six"){
+        else if(currentPlayer === 4 && dice.number === "six" && e.target.id === "4"){
             e.target.style.display = "none";
             setAllStocks({...allStocks, player4: [...allStocks.player4, 28]})
             setDice({...dice, number: "one"})
@@ -69,6 +69,9 @@ export const GameBoard = () => {
     }
     const moveStock = (e, item) => {
         const stockPosition = allStocks[manageStocks[`${currentPlayer}`]].indexOf(item);
+        if(stockPosition === -1){
+            return;
+        }
         function moveFunction(x){
             let counter = 1;
             const interval = setInterval(() => {
@@ -155,7 +158,7 @@ export const GameBoard = () => {
             <div className="game-board">
                 <div className="player1-box" style={{outline: currentPlayer === 1 ? "solid black 4px" : "none"}}>
                     {Array.from({length: 4}).map((item, index) => {
-                        return <button key={index} className="hole" style={{border: currentPlayer === 1 && dice.number === "six" ? "solid black 3px" : "none"}}><div className="stock" onClick={handleClickOnStock}></div></button>
+                        return <button key={index} className="hole" style={{border: currentPlayer === 1 && dice.number === "six" ? "solid black 3px" : "none"}}><div id="1" className="stock" onClick={handleClickOnStock}></div></button>
                     })}
                 </div>
                 <div className="top-box">
@@ -165,7 +168,7 @@ export const GameBoard = () => {
                 </div>
                 <div className="player2-box" style={{outline: currentPlayer === 2 ? "solid black 4px" : "none"}}>
                     {Array.from({length: 4}).map((item,index) => {
-                        return <button key={index} className="hole" style={{border: currentPlayer === 2 && dice.number === "six" ? "solid black 3px" : "none"}}><div className="stock" onClick={handleClickOnStock}></div></button>
+                        return <button key={index} className="hole" style={{border: currentPlayer === 2 && dice.number === "six" ? "solid black 3px" : "none"}}><div id="2" className="stock" onClick={handleClickOnStock}></div></button>
                     })}
                 </div>
                 <div className="left-box">
@@ -183,7 +186,7 @@ export const GameBoard = () => {
                 </div>
                 <div className="player4-box" style={{outline: currentPlayer === 4 ? "solid black 4px" : "none"}}>
                     {Array.from({length: 4}).map((item,index) => {
-                        return <button key={index} className="hole" style={{border: currentPlayer === 4 && dice.number === "six" ? "solid black 3px" : "none"}}><div className="stock" onClick={handleClickOnStock}></div></button>
+                        return <button key={index} className="hole" style={{border: currentPlayer === 4 && dice.number === "six" ? "solid black 3px" : "none"}}><div id="4" className="stock" onClick={handleClickOnStock}></div></button>
                     })}
                 </div>
                 <div className="bottom-box">
@@ -193,7 +196,7 @@ export const GameBoard = () => {
                 </div>
                 <div className="player3-box" style={{outline: currentPlayer === 3 ? "solid black 4px" : "none"}}>
                     {Array.from({length: 4}).map((item,index) => {
-                        return <button key={index} className="hole" style={{border: currentPlayer === 3 && dice.number === "six" ? "solid black 3px" : "none"}}><div className="stock" onClick={handleClickOnStock}></div></button>
+                        return <button key={index} className="hole" style={{border: currentPlayer === 3 && dice.number === "six" ? "solid black 3px" : "none"}}><div id="3" className="stock" onClick={handleClickOnStock}></div></button>
                     })}
                 </div>
             </div>
