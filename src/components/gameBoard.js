@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import styled from "styled-components";
 export const GameBoard = () => {
     const [currentPlayer, setCurrentPlayer] = useState(1);
@@ -24,6 +24,7 @@ export const GameBoard = () => {
         five: 5,
         six: 6
     }
+    const [checkHit, setCheckHit] = useState(false);
     const Entry = styled.div`
         visibility: ${(props) => allStocks.player1.includes(props.number) || allStocks.player2.includes(props.number) || allStocks.player3.includes(props.number) || allStocks.player4.includes(props.number) ? "visible" : "hidden"};
         background-color: ${(props) => allStocks.player1.includes(props.number) ? "gold" : allStocks.player2.includes(props.number) ? "red" : allStocks.player3.includes(props.number) ? "blue" : "springGreen"};
@@ -67,6 +68,127 @@ export const GameBoard = () => {
             setDice({...dice, number: "one"})
         }
     }
+
+    useEffect(() => {
+        if(checkHit === true){
+            if(currentPlayer === 1){
+                for(let i=0; i < allStocks.player4.length; i++){
+                    for(let j=0; j < allStocks.player1.length; j++){
+                        if(allStocks.player4[i] === allStocks.player1[j]){
+                            let updatedArray = allStocks.player1;
+                            updatedArray.splice(j,1);
+                            setAllStocks({...allStocks, player1: updatedArray})
+                        }
+                    }
+                }
+                for(let i=0; i < allStocks.player4.length; i++){
+                    for(let j=0; j < allStocks.player2.length; j++){
+                        if(allStocks.player4[i] === allStocks.player2[j]){
+                            let updatedArray = allStocks.player2;
+                            updatedArray.splice(j,1);
+                            setAllStocks({...allStocks, player2: updatedArray})
+                        }
+                    }
+                }
+                for(let i=0; i < allStocks.player4.length; i++){
+                    for(let j=0; j < allStocks.player3.length; j++){
+                        if(allStocks.player4[i] === allStocks.player3[j]){
+                            let updatedArray = allStocks.player3;
+                            updatedArray.splice(j,1);
+                            setAllStocks({...allStocks, player3: updatedArray})
+                        }
+                    }
+                }
+            }
+            else if(currentPlayer === 2){
+                for(let i=0; i < allStocks.player1.length; i++){
+                    for(let j=0; j < allStocks.player2.length; j++){
+                        if(allStocks.player1[i] === allStocks.player2[j]){
+                            let updatedArray = allStocks.player2;
+                            updatedArray.splice(j,1);
+                            setAllStocks({...allStocks, player2: updatedArray})
+                        }
+                    }
+                }
+                for(let i=0; i < allStocks.player1.length; i++){
+                    for(let j=0; j < allStocks.player3.length; j++){
+                        if(allStocks.player1[i] === allStocks.player3[j]){
+                            let updatedArray = allStocks.player3;
+                            updatedArray.splice(j,1);
+                            setAllStocks({...allStocks, player3: updatedArray})
+                        }
+                    }
+                }
+                for(let i=0; i < allStocks.player1.length; i++){
+                    for(let j=0; j < allStocks.player4.length; j++){
+                        if(allStocks.player1[i] === allStocks.player4[j]){
+                            let updatedArray = allStocks.player4;
+                            updatedArray.splice(j,1);
+                            setAllStocks({...allStocks, player4: updatedArray})
+                        }
+                    }
+                }
+            }
+            else if(currentPlayer === 3){
+                for(let i=0; i < allStocks.player2.length; i++){
+                    for(let j=0; j < allStocks.player1.length; j++){
+                        if(allStocks.player2[i] === allStocks.player1[j]){
+                            let updatedArray = allStocks.player1;
+                            updatedArray.splice(j,1);
+                            setAllStocks({...allStocks, player1: updatedArray})
+                        }
+                    }
+                }
+                for(let i=0; i < allStocks.player2.length; i++){
+                    for(let j=0; j < allStocks.player3.length; j++){
+                        if(allStocks.player2[i] === allStocks.player3[j]){
+                            let updatedArray = allStocks.player3;
+                            updatedArray.splice(j,1);
+                            setAllStocks({...allStocks, player3: updatedArray})
+                        }
+                    }
+                }
+                for(let i=0; i < allStocks.player2.length; i++){
+                    for(let j=0; j < allStocks.player4.length; j++){
+                        if(allStocks.player2[i] === allStocks.player4[j]){
+                            let updatedArray = allStocks.player4;
+                            updatedArray.splice(j,1);
+                            setAllStocks({...allStocks, player4: updatedArray})
+                        }
+                    }
+                }
+            }
+            else {
+                for(let i=0; i < allStocks.player3.length; i++){
+                    for(let j=0; j < allStocks.player1.length; j++){
+                        if(allStocks.player3[i] === allStocks.player1[j]){
+                            let updatedArray = allStocks.player1;
+                            updatedArray.splice(j,1);
+                            setAllStocks({...allStocks, player1: updatedArray})
+                        }
+                    }
+                }
+                for(let i=0; i < allStocks.player3.length; i++){
+                    for(let j=0; j < allStocks.player2.length; j++){
+                        if(allStocks.player3[i] === allStocks.player2[j]){
+                            let updatedArray = allStocks.player2;
+                            updatedArray.splice(j,1);
+                            setAllStocks({...allStocks, player2: updatedArray})
+                        }
+                    }
+                }
+                for(let i=0; i < allStocks.player3.length; i++){
+                    for(let j=0; j < allStocks.player4.length; j++){
+                        if(allStocks.player3[i] === allStocks.player4[j]){
+                            let updatedArray = allStocks.player4;
+                            updatedArray.splice(j,1);
+                            setAllStocks({...allStocks, player4: updatedArray})
+                        }
+                    }
+                }
+            }
+        }
+    })
     const moveStock = (e, item) => {
         const stockPosition = allStocks[manageStocks[`${currentPlayer}`]].indexOf(item);
         if(stockPosition === -1){
@@ -75,6 +197,7 @@ export const GameBoard = () => {
         function moveFunction(x){
             let counter = 1;
             const interval = setInterval(() => {
+                setCheckHit(false);
                 if(counter <= diceNumber[dice.number]){
                     const audio = new Audio("/move.wav");
                     audio.play().then();
@@ -126,6 +249,7 @@ export const GameBoard = () => {
                 }
                 else {
                     clearInterval(interval)
+                    setCheckHit(true);
                 }
             }, 200)
         }
