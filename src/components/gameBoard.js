@@ -81,7 +81,8 @@ export const GameBoard = () => {
                             const stocks = document.getElementsByClassName("1");
                             for(let i=0; i <= 3; i++){
                                 if(stocks[i].style.display === "none"){
-                                    return stocks[i].style.display = "flex";
+                                    stocks[i].style.display = "flex";
+                                    return
                                 }
                             }
                         }
@@ -96,7 +97,8 @@ export const GameBoard = () => {
                             const stocks = document.getElementsByClassName("2");
                             for(let i=0; i <= 3; i++){
                                 if(stocks[i].style.display === "none"){
-                                    return stocks[i].style.display = "flex";
+                                    stocks[i].style.display = "flex";
+                                    return
                                 }
                             }
                         }
@@ -111,7 +113,8 @@ export const GameBoard = () => {
                             const stocks = document.getElementsByClassName("3");
                             for(let i=0; i <= 3; i++){
                                 if(stocks[i].style.display === "none"){
-                                    return stocks[i].style.display = "flex";
+                                    stocks[i].style.display = "flex";
+                                    return
                                 }
                             }
                         }
@@ -128,7 +131,8 @@ export const GameBoard = () => {
                             const stocks = document.getElementsByClassName("2");
                             for(let i=0; i <= 3; i++){
                                 if(stocks[i].style.display === "none"){
-                                    return stocks[i].style.display = "flex";
+                                    stocks[i].style.display = "flex";
+                                    return
                                 }
                             }
                         }
@@ -143,7 +147,8 @@ export const GameBoard = () => {
                             const stocks = document.getElementsByClassName("3");
                             for(let i=0; i <= 3; i++){
                                 if(stocks[i].style.display === "none"){
-                                    return stocks[i].style.display = "flex";
+                                    stocks[i].style.display = "flex";
+                                    return
                                 }
                             }
                         }
@@ -158,7 +163,8 @@ export const GameBoard = () => {
                             const stocks = document.getElementsByClassName("4");
                             for(let i=0; i <= 3; i++){
                                 if(stocks[i].style.display === "none"){
-                                    return stocks[i].style.display = "flex";
+                                    stocks[i].style.display = "flex";
+                                    return
                                 }
                             }
                         }
@@ -175,7 +181,8 @@ export const GameBoard = () => {
                             const stocks = document.getElementsByClassName("1");
                             for(let i=0; i <= 3; i++){
                                 if(stocks[i].style.display === "none"){
-                                    return stocks[i].style.display = "flex";
+                                    stocks[i].style.display = "flex";
+                                    return
                                 }
                             }
                         }
@@ -190,7 +197,8 @@ export const GameBoard = () => {
                             const stocks = document.getElementsByClassName("3");
                             for(let i=0; i <= 3; i++){
                                 if(stocks[i].style.display === "none"){
-                                    return stocks[i].style.display = "flex";
+                                    stocks[i].style.display = "flex";
+                                    return
                                 }
                             }
                         }
@@ -205,7 +213,8 @@ export const GameBoard = () => {
                             const stocks = document.getElementsByClassName("4");
                             for(let i=0; i <= 3; i++){
                                 if(stocks[i].style.display === "none"){
-                                    return stocks[i].style.display = "flex";
+                                    stocks[i].style.display = "flex";
+                                    return
                                 }
                             }
                         }
@@ -222,7 +231,8 @@ export const GameBoard = () => {
                             const stocks = document.getElementsByClassName("1");
                             for(let i=0; i <= 3; i++){
                                 if(stocks[i].style.display === "none"){
-                                    return stocks[i].style.display = "flex";
+                                    stocks[i].style.display = "flex";
+                                    return
                                 }
                             }
                         }
@@ -237,7 +247,8 @@ export const GameBoard = () => {
                             const stocks = document.getElementsByClassName("2");
                             for(let i=0; i <= 3; i++){
                                 if(stocks[i].style.display === "none"){
-                                    return stocks[i].style.display = "flex";
+                                    stocks[i].style.display = "flex";
+                                    return
                                 }
                             }
                         }
@@ -252,7 +263,8 @@ export const GameBoard = () => {
                             const stocks = document.getElementsByClassName("4");
                             for(let i=0; i <= 3; i++){
                                 if(stocks[i].style.display === "none"){
-                                    return stocks[i].style.display = "flex";
+                                    stocks[i].style.display = "flex";
+                                    return;
                                 }
                             }
                         }
