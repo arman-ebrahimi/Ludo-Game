@@ -78,6 +78,12 @@ export const GameBoard = () => {
                             let updatedArray = allStocks.player1;
                             updatedArray.splice(j,1);
                             setAllStocks({...allStocks, player1: updatedArray})
+                            const stocks = document.getElementsByClassName("1");
+                            for(let i=0; i <= 3; i++){
+                                if(stocks[i].style.display === "none"){
+                                    return stocks[i].style.display = "flex";
+                                }
+                            }
                         }
                     }
                 }
@@ -87,6 +93,12 @@ export const GameBoard = () => {
                             let updatedArray = allStocks.player2;
                             updatedArray.splice(j,1);
                             setAllStocks({...allStocks, player2: updatedArray})
+                            const stocks = document.getElementsByClassName("2");
+                            for(let i=0; i <= 3; i++){
+                                if(stocks[i].style.display === "none"){
+                                    return stocks[i].style.display = "flex";
+                                }
+                            }
                         }
                     }
                 }
@@ -96,6 +108,12 @@ export const GameBoard = () => {
                             let updatedArray = allStocks.player3;
                             updatedArray.splice(j,1);
                             setAllStocks({...allStocks, player3: updatedArray})
+                            const stocks = document.getElementsByClassName("3");
+                            for(let i=0; i <= 3; i++){
+                                if(stocks[i].style.display === "none"){
+                                    return stocks[i].style.display = "flex";
+                                }
+                            }
                         }
                     }
                 }
@@ -107,6 +125,12 @@ export const GameBoard = () => {
                             let updatedArray = allStocks.player2;
                             updatedArray.splice(j,1);
                             setAllStocks({...allStocks, player2: updatedArray})
+                            const stocks = document.getElementsByClassName("2");
+                            for(let i=0; i <= 3; i++){
+                                if(stocks[i].style.display === "none"){
+                                    return stocks[i].style.display = "flex";
+                                }
+                            }
                         }
                     }
                 }
@@ -116,6 +140,12 @@ export const GameBoard = () => {
                             let updatedArray = allStocks.player3;
                             updatedArray.splice(j,1);
                             setAllStocks({...allStocks, player3: updatedArray})
+                            const stocks = document.getElementsByClassName("3");
+                            for(let i=0; i <= 3; i++){
+                                if(stocks[i].style.display === "none"){
+                                    return stocks[i].style.display = "flex";
+                                }
+                            }
                         }
                     }
                 }
@@ -125,6 +155,12 @@ export const GameBoard = () => {
                             let updatedArray = allStocks.player4;
                             updatedArray.splice(j,1);
                             setAllStocks({...allStocks, player4: updatedArray})
+                            const stocks = document.getElementsByClassName("4");
+                            for(let i=0; i <= 3; i++){
+                                if(stocks[i].style.display === "none"){
+                                    return stocks[i].style.display = "flex";
+                                }
+                            }
                         }
                     }
                 }
@@ -136,6 +172,12 @@ export const GameBoard = () => {
                             let updatedArray = allStocks.player1;
                             updatedArray.splice(j,1);
                             setAllStocks({...allStocks, player1: updatedArray})
+                            const stocks = document.getElementsByClassName("1");
+                            for(let i=0; i <= 3; i++){
+                                if(stocks[i].style.display === "none"){
+                                    return stocks[i].style.display = "flex";
+                                }
+                            }
                         }
                     }
                 }
@@ -145,6 +187,12 @@ export const GameBoard = () => {
                             let updatedArray = allStocks.player3;
                             updatedArray.splice(j,1);
                             setAllStocks({...allStocks, player3: updatedArray})
+                            const stocks = document.getElementsByClassName("3");
+                            for(let i=0; i <= 3; i++){
+                                if(stocks[i].style.display === "none"){
+                                    return stocks[i].style.display = "flex";
+                                }
+                            }
                         }
                     }
                 }
@@ -154,6 +202,12 @@ export const GameBoard = () => {
                             let updatedArray = allStocks.player4;
                             updatedArray.splice(j,1);
                             setAllStocks({...allStocks, player4: updatedArray})
+                            const stocks = document.getElementsByClassName("4");
+                            for(let i=0; i <= 3; i++){
+                                if(stocks[i].style.display === "none"){
+                                    return stocks[i].style.display = "flex";
+                                }
+                            }
                         }
                     }
                 }
@@ -165,6 +219,12 @@ export const GameBoard = () => {
                             let updatedArray = allStocks.player1;
                             updatedArray.splice(j,1);
                             setAllStocks({...allStocks, player1: updatedArray})
+                            const stocks = document.getElementsByClassName("1");
+                            for(let i=0; i <= 3; i++){
+                                if(stocks[i].style.display === "none"){
+                                    return stocks[i].style.display = "flex";
+                                }
+                            }
                         }
                     }
                 }
@@ -174,6 +234,12 @@ export const GameBoard = () => {
                             let updatedArray = allStocks.player2;
                             updatedArray.splice(j,1);
                             setAllStocks({...allStocks, player2: updatedArray})
+                            const stocks = document.getElementsByClassName("2");
+                            for(let i=0; i <= 3; i++){
+                                if(stocks[i].style.display === "none"){
+                                    return stocks[i].style.display = "flex";
+                                }
+                            }
                         }
                     }
                 }
@@ -183,12 +249,18 @@ export const GameBoard = () => {
                             let updatedArray = allStocks.player4;
                             updatedArray.splice(j,1);
                             setAllStocks({...allStocks, player4: updatedArray})
+                            const stocks = document.getElementsByClassName("4");
+                            for(let i=0; i <= 3; i++){
+                                if(stocks[i].style.display === "none"){
+                                    return stocks[i].style.display = "flex";
+                                }
+                            }
                         }
                     }
                 }
             }
-        }
-    })
+        }// eslint-disable-next-line
+    }, [checkHit])
     const moveStock = (e, item) => {
         const stockPosition = allStocks[manageStocks[`${currentPlayer}`]].indexOf(item);
         if(stockPosition === -1){
@@ -282,7 +354,7 @@ export const GameBoard = () => {
             <div className="game-board">
                 <div className="player1-box" style={{outline: currentPlayer === 1 ? "solid black 4px" : "none"}}>
                     {Array.from({length: 4}).map((item, index) => {
-                        return <button key={index} className="hole" style={{border: currentPlayer === 1 && dice.number === "six" ? "solid black 3px" : "none"}}><div id="1" className="stock" onClick={handleClickOnStock}></div></button>
+                        return <button key={index} className="hole" style={{border: currentPlayer === 1 && dice.number === "six" ? "solid black 3px" : "none"}}><div id="1" className="stock 1" onClick={handleClickOnStock}></div></button>
                     })}
                 </div>
                 <div className="top-box">
@@ -292,7 +364,7 @@ export const GameBoard = () => {
                 </div>
                 <div className="player2-box" style={{outline: currentPlayer === 2 ? "solid black 4px" : "none"}}>
                     {Array.from({length: 4}).map((item,index) => {
-                        return <button key={index} className="hole" style={{border: currentPlayer === 2 && dice.number === "six" ? "solid black 3px" : "none"}}><div id="2" className="stock" onClick={handleClickOnStock}></div></button>
+                        return <button key={index} className="hole" style={{border: currentPlayer === 2 && dice.number === "six" ? "solid black 3px" : "none"}}><div id="2" className="stock 2" onClick={handleClickOnStock}></div></button>
                     })}
                 </div>
                 <div className="left-box">
@@ -310,7 +382,7 @@ export const GameBoard = () => {
                 </div>
                 <div className="player4-box" style={{outline: currentPlayer === 4 ? "solid black 4px" : "none"}}>
                     {Array.from({length: 4}).map((item,index) => {
-                        return <button key={index} className="hole" style={{border: currentPlayer === 4 && dice.number === "six" ? "solid black 3px" : "none"}}><div id="4" className="stock" onClick={handleClickOnStock}></div></button>
+                        return <button key={index} className="hole" style={{border: currentPlayer === 4 && dice.number === "six" ? "solid black 3px" : "none"}}><div id="4" className="stock 4" onClick={handleClickOnStock}></div></button>
                     })}
                 </div>
                 <div className="bottom-box">
@@ -320,7 +392,7 @@ export const GameBoard = () => {
                 </div>
                 <div className="player3-box" style={{outline: currentPlayer === 3 ? "solid black 4px" : "none"}}>
                     {Array.from({length: 4}).map((item,index) => {
-                        return <button key={index} className="hole" style={{border: currentPlayer === 3 && dice.number === "six" ? "solid black 3px" : "none"}}><div id="3" className="stock" onClick={handleClickOnStock}></div></button>
+                        return <button key={index} className="hole" style={{border: currentPlayer === 3 && dice.number === "six" ? "solid black 3px" : "none"}}><div id="3" className="stock 3" onClick={handleClickOnStock}></div></button>
                     })}
                 </div>
             </div>
