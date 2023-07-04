@@ -71,52 +71,74 @@ export const GameBoard = () => {
 
     useEffect(() => {
         if(checkHit === true){
+            function hitFunction1(j){
+                let updatedArray = allStocks.player1;
+                updatedArray.splice(j,1);
+                setAllStocks({...allStocks, player1: updatedArray})
+                const stocks = document.getElementsByClassName("1");
+                for(let i=0; i <= 3; i++){
+                    if(stocks[i].style.display === "none"){
+                        stocks[i].style.display = "flex";
+                        return
+                    }
+                }
+            }
+            function hitFunction2(j){
+                let updatedArray = allStocks.player2;
+                updatedArray.splice(j,1);
+                setAllStocks({...allStocks, player2: updatedArray})
+                const stocks = document.getElementsByClassName("2");
+                for(let i=0; i <= 3; i++){
+                    if(stocks[i].style.display === "none"){
+                        stocks[i].style.display = "flex";
+                        return
+                    }
+                }
+            }
+            function hitFunction3(j){
+                let updatedArray = allStocks.player3;
+                updatedArray.splice(j,1);
+                setAllStocks({...allStocks, player3: updatedArray})
+                const stocks = document.getElementsByClassName("3");
+                for(let i=0; i <= 3; i++){
+                    if(stocks[i].style.display === "none"){
+                        stocks[i].style.display = "flex";
+                        return
+                    }
+                }
+            }
+            function hitFunction4(j){
+                let updatedArray = allStocks.player4;
+                updatedArray.splice(j,1);
+                setAllStocks({...allStocks, player4: updatedArray})
+                const stocks = document.getElementsByClassName("4");
+                for(let i=0; i <= 3; i++){
+                    if(stocks[i].style.display === "none"){
+                        stocks[i].style.display = "flex";
+                        return
+                    }
+                }
+            }
+            
             if(currentPlayer === 1){
                 for(let i=0; i < allStocks.player4.length; i++){
                     for(let j=0; j < allStocks.player1.length; j++){
                         if(allStocks.player4[i] === allStocks.player1[j]){
-                            let updatedArray = allStocks.player1;
-                            updatedArray.splice(j,1);
-                            setAllStocks({...allStocks, player1: updatedArray})
-                            const stocks = document.getElementsByClassName("1");
-                            for(let i=0; i <= 3; i++){
-                                if(stocks[i].style.display === "none"){
-                                    stocks[i].style.display = "flex";
-                                    return
-                                }
-                            }
+                            hitFunction1(j);
                         }
                     }
                 }
                 for(let i=0; i < allStocks.player4.length; i++){
                     for(let j=0; j < allStocks.player2.length; j++){
                         if(allStocks.player4[i] === allStocks.player2[j]){
-                            let updatedArray = allStocks.player2;
-                            updatedArray.splice(j,1);
-                            setAllStocks({...allStocks, player2: updatedArray})
-                            const stocks = document.getElementsByClassName("2");
-                            for(let i=0; i <= 3; i++){
-                                if(stocks[i].style.display === "none"){
-                                    stocks[i].style.display = "flex";
-                                    return
-                                }
-                            }
+                            hitFunction2(j);
                         }
                     }
                 }
                 for(let i=0; i < allStocks.player4.length; i++){
                     for(let j=0; j < allStocks.player3.length; j++){
                         if(allStocks.player4[i] === allStocks.player3[j]){
-                            let updatedArray = allStocks.player3;
-                            updatedArray.splice(j,1);
-                            setAllStocks({...allStocks, player3: updatedArray})
-                            const stocks = document.getElementsByClassName("3");
-                            for(let i=0; i <= 3; i++){
-                                if(stocks[i].style.display === "none"){
-                                    stocks[i].style.display = "flex";
-                                    return
-                                }
-                            }
+                            hitFunction3(j);
                         }
                     }
                 }
@@ -125,48 +147,21 @@ export const GameBoard = () => {
                 for(let i=0; i < allStocks.player1.length; i++){
                     for(let j=0; j < allStocks.player2.length; j++){
                         if(allStocks.player1[i] === allStocks.player2[j]){
-                            let updatedArray = allStocks.player2;
-                            updatedArray.splice(j,1);
-                            setAllStocks({...allStocks, player2: updatedArray})
-                            const stocks = document.getElementsByClassName("2");
-                            for(let i=0; i <= 3; i++){
-                                if(stocks[i].style.display === "none"){
-                                    stocks[i].style.display = "flex";
-                                    return
-                                }
-                            }
+                            hitFunction2(j);
                         }
                     }
                 }
                 for(let i=0; i < allStocks.player1.length; i++){
                     for(let j=0; j < allStocks.player3.length; j++){
                         if(allStocks.player1[i] === allStocks.player3[j]){
-                            let updatedArray = allStocks.player3;
-                            updatedArray.splice(j,1);
-                            setAllStocks({...allStocks, player3: updatedArray})
-                            const stocks = document.getElementsByClassName("3");
-                            for(let i=0; i <= 3; i++){
-                                if(stocks[i].style.display === "none"){
-                                    stocks[i].style.display = "flex";
-                                    return
-                                }
-                            }
+                            hitFunction3(j);
                         }
                     }
                 }
                 for(let i=0; i < allStocks.player1.length; i++){
                     for(let j=0; j < allStocks.player4.length; j++){
                         if(allStocks.player1[i] === allStocks.player4[j]){
-                            let updatedArray = allStocks.player4;
-                            updatedArray.splice(j,1);
-                            setAllStocks({...allStocks, player4: updatedArray})
-                            const stocks = document.getElementsByClassName("4");
-                            for(let i=0; i <= 3; i++){
-                                if(stocks[i].style.display === "none"){
-                                    stocks[i].style.display = "flex";
-                                    return
-                                }
-                            }
+                            hitFunction4(j);
                         }
                     }
                 }
@@ -175,48 +170,21 @@ export const GameBoard = () => {
                 for(let i=0; i < allStocks.player2.length; i++){
                     for(let j=0; j < allStocks.player1.length; j++){
                         if(allStocks.player2[i] === allStocks.player1[j]){
-                            let updatedArray = allStocks.player1;
-                            updatedArray.splice(j,1);
-                            setAllStocks({...allStocks, player1: updatedArray})
-                            const stocks = document.getElementsByClassName("1");
-                            for(let i=0; i <= 3; i++){
-                                if(stocks[i].style.display === "none"){
-                                    stocks[i].style.display = "flex";
-                                    return
-                                }
-                            }
+                            hitFunction1(j);
                         }
                     }
                 }
                 for(let i=0; i < allStocks.player2.length; i++){
                     for(let j=0; j < allStocks.player3.length; j++){
                         if(allStocks.player2[i] === allStocks.player3[j]){
-                            let updatedArray = allStocks.player3;
-                            updatedArray.splice(j,1);
-                            setAllStocks({...allStocks, player3: updatedArray})
-                            const stocks = document.getElementsByClassName("3");
-                            for(let i=0; i <= 3; i++){
-                                if(stocks[i].style.display === "none"){
-                                    stocks[i].style.display = "flex";
-                                    return
-                                }
-                            }
+                            hitFunction3(j);
                         }
                     }
                 }
                 for(let i=0; i < allStocks.player2.length; i++){
                     for(let j=0; j < allStocks.player4.length; j++){
                         if(allStocks.player2[i] === allStocks.player4[j]){
-                            let updatedArray = allStocks.player4;
-                            updatedArray.splice(j,1);
-                            setAllStocks({...allStocks, player4: updatedArray})
-                            const stocks = document.getElementsByClassName("4");
-                            for(let i=0; i <= 3; i++){
-                                if(stocks[i].style.display === "none"){
-                                    stocks[i].style.display = "flex";
-                                    return
-                                }
-                            }
+                            hitFunction4(j);
                         }
                     }
                 }
@@ -225,54 +193,28 @@ export const GameBoard = () => {
                 for(let i=0; i < allStocks.player3.length; i++){
                     for(let j=0; j < allStocks.player1.length; j++){
                         if(allStocks.player3[i] === allStocks.player1[j]){
-                            let updatedArray = allStocks.player1;
-                            updatedArray.splice(j,1);
-                            setAllStocks({...allStocks, player1: updatedArray})
-                            const stocks = document.getElementsByClassName("1");
-                            for(let i=0; i <= 3; i++){
-                                if(stocks[i].style.display === "none"){
-                                    stocks[i].style.display = "flex";
-                                    return
-                                }
-                            }
+                            hitFunction1(j);
                         }
                     }
                 }
                 for(let i=0; i < allStocks.player3.length; i++){
                     for(let j=0; j < allStocks.player2.length; j++){
                         if(allStocks.player3[i] === allStocks.player2[j]){
-                            let updatedArray = allStocks.player2;
-                            updatedArray.splice(j,1);
-                            setAllStocks({...allStocks, player2: updatedArray})
-                            const stocks = document.getElementsByClassName("2");
-                            for(let i=0; i <= 3; i++){
-                                if(stocks[i].style.display === "none"){
-                                    stocks[i].style.display = "flex";
-                                    return
-                                }
-                            }
+                            hitFunction2(j);
                         }
                     }
                 }
                 for(let i=0; i < allStocks.player3.length; i++){
                     for(let j=0; j < allStocks.player4.length; j++){
                         if(allStocks.player3[i] === allStocks.player4[j]){
-                            let updatedArray = allStocks.player4;
-                            updatedArray.splice(j,1);
-                            setAllStocks({...allStocks, player4: updatedArray})
-                            const stocks = document.getElementsByClassName("4");
-                            for(let i=0; i <= 3; i++){
-                                if(stocks[i].style.display === "none"){
-                                    stocks[i].style.display = "flex";
-                                    return;
-                                }
-                            }
+                            hitFunction4(j);
                         }
                     }
                 }
             }
         }// eslint-disable-next-line
     }, [checkHit])
+
     const moveStock = (e, item) => {
         const stockPosition = allStocks[manageStocks[`${currentPlayer}`]].indexOf(item);
         if(stockPosition === -1){
