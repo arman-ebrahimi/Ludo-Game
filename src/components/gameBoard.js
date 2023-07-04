@@ -119,31 +119,8 @@ export const GameBoard = () => {
                     }
                 }
             }
-            
+
             if(currentPlayer === 1){
-                for(let i=0; i < allStocks.player4.length; i++){
-                    for(let j=0; j < allStocks.player1.length; j++){
-                        if(allStocks.player4[i] === allStocks.player1[j]){
-                            hitFunction1(j);
-                        }
-                    }
-                }
-                for(let i=0; i < allStocks.player4.length; i++){
-                    for(let j=0; j < allStocks.player2.length; j++){
-                        if(allStocks.player4[i] === allStocks.player2[j]){
-                            hitFunction2(j);
-                        }
-                    }
-                }
-                for(let i=0; i < allStocks.player4.length; i++){
-                    for(let j=0; j < allStocks.player3.length; j++){
-                        if(allStocks.player4[i] === allStocks.player3[j]){
-                            hitFunction3(j);
-                        }
-                    }
-                }
-            }
-            else if(currentPlayer === 2){
                 for(let i=0; i < allStocks.player1.length; i++){
                     for(let j=0; j < allStocks.player2.length; j++){
                         if(allStocks.player1[i] === allStocks.player2[j]){
@@ -166,7 +143,7 @@ export const GameBoard = () => {
                     }
                 }
             }
-            else if(currentPlayer === 3){
+            else if(currentPlayer === 2){
                 for(let i=0; i < allStocks.player2.length; i++){
                     for(let j=0; j < allStocks.player1.length; j++){
                         if(allStocks.player2[i] === allStocks.player1[j]){
@@ -189,7 +166,7 @@ export const GameBoard = () => {
                     }
                 }
             }
-            else {
+            else if(currentPlayer === 3){
                 for(let i=0; i < allStocks.player3.length; i++){
                     for(let j=0; j < allStocks.player1.length; j++){
                         if(allStocks.player3[i] === allStocks.player1[j]){
@@ -212,6 +189,38 @@ export const GameBoard = () => {
                     }
                 }
             }
+            else {
+                for(let i=0; i < allStocks.player4.length; i++){
+                    for(let j=0; j < allStocks.player1.length; j++){
+                        if(allStocks.player4[i] === allStocks.player1[j]){
+                            hitFunction1(j);
+                        }
+                    }
+                }
+                for(let i=0; i < allStocks.player4.length; i++){
+                    for(let j=0; j < allStocks.player2.length; j++){
+                        if(allStocks.player4[i] === allStocks.player2[j]){
+                            hitFunction2(j);
+                        }
+                    }
+                }
+                for(let i=0; i < allStocks.player4.length; i++){
+                    for(let j=0; j < allStocks.player3.length; j++){
+                        if(allStocks.player4[i] === allStocks.player3[j]){
+                            hitFunction3(j);
+                        }
+                    }
+                }
+            }
+
+            if(dice.number !== "six"){
+                if(currentPlayer === 4){
+                    setCurrentPlayer(1)
+                }
+                else {
+                    setCurrentPlayer(currentPlayer + 1)
+                }
+            }
         }// eslint-disable-next-line
     }, [checkHit])
 
@@ -232,25 +241,25 @@ export const GameBoard = () => {
                         newArray[stockPosition] = "Y1";
                     }
                     else if(x === 1 && isNaN(newArray[stockPosition])){
-                        newArray[stockPosition] = "Y" + (Number(newArray[stockPosition].substr(1,1)) + 1);
+                        newArray[stockPosition] = "Y" + (Number(newArray[stockPosition].substring(1)) + 1);
                     }
                     else if(x === 2 && newArray[stockPosition] === 52){
                         newArray[stockPosition] = "R1";
                     }
                     else if(x === 2 && isNaN(newArray[stockPosition])){
-                        newArray[stockPosition] = "R" + (Number(newArray[stockPosition].substr(1,1)) + 1);
+                        newArray[stockPosition] = "R" + (Number(newArray[stockPosition].substring(1)) + 1);
                     }
                     else if(x === 3 && newArray[stockPosition] === 13){
                         newArray[stockPosition] = "B1";
                     }
                     else if(x === 3 && isNaN(newArray[stockPosition])){
-                        newArray[stockPosition] = "B" + (Number(newArray[stockPosition].substr(1,1)) + 1);
+                        newArray[stockPosition] = "B" + (Number(newArray[stockPosition].substring(1)) + 1);
                     }
                     else if(x === 4 && newArray[stockPosition] === 26){
                         newArray[stockPosition] = "G1";
                     }
                     else if(x === 4 && isNaN(newArray[stockPosition])){
-                        newArray[stockPosition] = "G" + (Number(newArray[stockPosition].substr(1,1)) + 1);
+                        newArray[stockPosition] = "G" + (Number(newArray[stockPosition].substring(1)) + 1);
                     }
                     else {
                         newArray[stockPosition] ++;
@@ -293,14 +302,6 @@ export const GameBoard = () => {
             moveFunction(4);
         }
 
-        if(dice.number !== "six"){
-            if(currentPlayer === 4){
-                setCurrentPlayer(1)
-            }
-            else {
-                setCurrentPlayer(currentPlayer + 1)
-            }
-        }
     }
 
     return(
