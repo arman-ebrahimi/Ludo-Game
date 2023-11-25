@@ -2,20 +2,20 @@ import {useEffect, useState} from "react";
 import styled from "styled-components";
 export const GameBoard = () => {
     const [currentPlayer, setCurrentPlayer] = useState(1);
-    const manageStocks = {
-        1: "player1",
-        2: "player2",
-        3: "player3",
-        4: "player4"
-    }
     const [allStocks, setAllStocks] = useState({
-        player1: [],
-        player2: [],
-        player3: [],
-        player4: []
+        player1: [23, 41, 5],
+        player2: [14, 18],
+        player3: [46, 29],
+        player4: [11]
     })
+    const [checkHit, setCheckHit] = useState(false);
+    const [moveAllow, setMoveAllow] = useState(true);
     const [dice, setDice] = useState({number: "one", rotateRight: false, isRolling: false});
+
     const diceArray = ["one", "two", "three", "four", "five", "six"];
+    const parkingEntrance = ['', 39, 52, 13, 26];
+    const currentLetter = ['', 'Y', 'R', 'B', 'G'];
+
     const diceNumber = {
         one: 1,
         two: 2,
@@ -24,25 +24,41 @@ export const GameBoard = () => {
         five: 5,
         six: 6
     }
-    const [checkHit, setCheckHit] = useState(false);
+    const manageStocks = {
+        1: "player1",
+        2: "player2",
+        3: "player3",
+        4: "player4"
+    }
     const Entry = styled.div`
         visibility: ${(props) => allStocks.player1.includes(props.number) || allStocks.player2.includes(props.number) || allStocks.player3.includes(props.number) || allStocks.player4.includes(props.number) ? "visible" : "hidden"};
         background-color: ${(props) => allStocks.player1.includes(props.number) ? "gold" : allStocks.player2.includes(props.number) ? "red" : allStocks.player3.includes(props.number) ? "blue" : "springGreen"};
 `
     const rollDice = () => {
         const audio = new Audio("/rolling.mp3");
-        audio.play().then();
+        audio.play();
         setDice({number: dice.number, rotateRight: !dice.rotateRight, isRolling: true})
         const randomRoll = diceArray[Math.floor(Math.random() * diceArray.length)];
+        function function1(value){
+            return typeof value === 'number';
+        }
+        function function2(value){
+            return Number(value.substring(1)) + diceNumber[randomRoll] > 5 || allStocks[manageStocks[`${currentPlayer}`]].includes(value.substring(0,1) + (Number(value.substring(1)) + diceNumber[randomRoll]))
+        }
         setTimeout(() => {
-            setDice({number: randomRoll, rotateRight: !dice.rotateRight, isRolling: false})
-            if(randomRoll !== "six" && allStocks[manageStocks[`${currentPlayer}`]].length === 0){
+            setMoveAllow(true)
+            audio.pause();
+            setDice({number: randomRoll, rotateRight: !dice.rotateRight, isRolling: true})
+            if(randomRoll !== "six" && !(allStocks[manageStocks[`${currentPlayer}`]].some(function1)) && allStocks[manageStocks[`${currentPlayer}`]].every(function2)){
                 if(currentPlayer === 4){
                     setCurrentPlayer(1)
+                    setDice({number: randomRoll, rotateRight: !dice.rotateRight, isRolling: false})
                 }
                 else {
                     setCurrentPlayer(currentPlayer + 1)
+                    setDice({number: randomRoll, rotateRight: !dice.rotateRight, isRolling: false})
                 }
+                setMoveAllow(false)
             }
         }, 1000)
     }
@@ -50,22 +66,22 @@ export const GameBoard = () => {
         if(currentPlayer === 1 && dice.number === "six" && e.target.id === "1"){
             e.target.style.display = "none";
             setAllStocks({...allStocks, player1: [...allStocks.player1, 41]})
-            setDice({...dice, number: "one"})
+            setDice({...dice, number: "one", isRolling: false})
         }
         else if(currentPlayer === 2 && dice.number === "six" && e.target.id === "2"){
             e.target.style.display = "none";
             setAllStocks({...allStocks, player2: [...allStocks.player2, 2]})
-            setDice({...dice, number: "one"})
+            setDice({...dice, number: "one", isRolling: false})
         }
         else if(currentPlayer === 3 && dice.number === "six" && e.target.id === "3"){
             e.target.style.display = "none";
             setAllStocks({...allStocks, player3: [...allStocks.player3, 15]})
-            setDice({...dice, number: "one"})
+            setDice({...dice, number: "one", isRolling: false})
         }
         else if(currentPlayer === 4 && dice.number === "six" && e.target.id === "4"){
             e.target.style.display = "none";
             setAllStocks({...allStocks, player4: [...allStocks.player4, 28]})
-            setDice({...dice, number: "one"})
+            setDice({...dice, number: "one", isRolling: false})
         }
     }
 
@@ -216,57 +232,92 @@ export const GameBoard = () => {
             if(dice.number !== "six"){
                 if(currentPlayer === 4){
                     setCurrentPlayer(1)
+                    setDice({...dice, isRolling: false})
                 }
                 else {
                     setCurrentPlayer(currentPlayer + 1)
+                    setDice({...dice, isRolling: false})
                 }
+                setMoveAllow(false)
+            }
+            if(dice.number === "six"){
+                setMoveAllow(false)
+                setDice({...dice, isRolling: false})
             }
         }// eslint-disable-next-line
     }, [checkHit])
 
     const moveStock = (e, item) => {
         const stockPosition = allStocks[manageStocks[`${currentPlayer}`]].indexOf(item);
-        if(stockPosition === -1){
+        if(stockPosition === -1 || !moveAllow){
             return;
         }
         function moveFunction(x){
             let counter = 1;
+            let audio;
             const interval = setInterval(() => {
                 setCheckHit(false);
                 if(counter <= diceNumber[dice.number]){
-                    const audio = new Audio("/move.wav");
-                    audio.play().then();
+                    audio = new Audio("/move.wav");
+                    audio.play();
                     let newArray = allStocks[`player${x}`];
-                    if(x === 1 && newArray[stockPosition] === 39){
-                        newArray[stockPosition] = "Y1";
+                    if(counter === 1 && ((dice.number === "six" && newArray[stockPosition] === parkingEntrance[x]) || newArray.includes(currentLetter[x] + (diceNumber[dice.number] - (39 - newArray[stockPosition]))) || (isNaN(newArray[stockPosition]) && (Number(newArray[stockPosition].substring(1)) + diceNumber[dice.number] > 5 || newArray.includes(currentLetter[x] + (Number(newArray[stockPosition].substring(1)) + diceNumber[dice.number])))))){
+                        return audio.pause();
                     }
-                    else if(x === 1 && isNaN(newArray[stockPosition])){
-                        newArray[stockPosition] = "Y" + (Number(newArray[stockPosition].substring(1)) + 1);
+                    else if(newArray[stockPosition] === parkingEntrance[x]){
+                        newArray[stockPosition] = currentLetter[x] + 1;
                     }
-                    else if(x === 2 && newArray[stockPosition] === 52){
-                        newArray[stockPosition] = "R1";
+                    else if(isNaN(newArray[stockPosition])){
+                        newArray[stockPosition] = currentLetter[x] + (Number(newArray[stockPosition].substring(1)) + 1);
                     }
-                    else if(x === 2 && isNaN(newArray[stockPosition])){
-                        newArray[stockPosition] = "R" + (Number(newArray[stockPosition].substring(1)) + 1);
-                    }
-                    else if(x === 3 && newArray[stockPosition] === 13){
-                        newArray[stockPosition] = "B1";
-                    }
-                    else if(x === 3 && isNaN(newArray[stockPosition])){
-                        newArray[stockPosition] = "B" + (Number(newArray[stockPosition].substring(1)) + 1);
-                    }
-                    else if(x === 4 && newArray[stockPosition] === 26){
-                        newArray[stockPosition] = "G1";
-                    }
-                    else if(x === 4 && isNaN(newArray[stockPosition])){
-                        newArray[stockPosition] = "G" + (Number(newArray[stockPosition].substring(1)) + 1);
-                    }
-                    else {
+                    else{
                         newArray[stockPosition] ++;
                         if(newArray[stockPosition] > 52){
                             newArray[stockPosition] -= 52;
                         }
                     }
+                    /*else if(x === 2){
+                        if(counter === 1 && ((dice.number === "six" && newArray[stockPosition] === 52) || newArray.includes("R" + (diceNumber[dice.number] - (52 - newArray[stockPosition]))))){
+                            audio.pause();
+                            return
+                        }
+                        newArray[stockPosition] = "R1";
+                    }
+                    else if(x === 2 && isNaN(newArray[stockPosition])){
+                        if(counter === 1 && (Number(newArray[stockPosition].substring(1)) + diceNumber[dice.number] > 5 || newArray.includes(newArray[stockPosition].substring(0, 1) + (Number(newArray[stockPosition].substring(1)) + diceNumber[dice.number])))){
+                            audio.pause();
+                            return;
+                        }
+                        newArray[stockPosition] = "R" + (Number(newArray[stockPosition].substring(1)) + 1);
+                    }
+                    else if(x === 3){
+                        if(counter === 1 && ((dice.number === "six" && newArray[stockPosition] === 13) || newArray.includes("B" + (diceNumber[dice.number] - (13 - newArray[stockPosition]))))){
+                            audio.pause();
+                            return
+                        }
+                        newArray[stockPosition] = "B1";
+                    }
+                    else if(x === 3 && isNaN(newArray[stockPosition])){
+                        if(counter === 1 && (Number(newArray[stockPosition].substring(1)) + diceNumber[dice.number] > 5 || newArray.includes(newArray[stockPosition].substring(0, 1) + (Number(newArray[stockPosition].substring(1)) + diceNumber[dice.number])))){
+                            audio.pause();
+                            return;
+                        }
+                        newArray[stockPosition] = "B" + (Number(newArray[stockPosition].substring(1)) + 1);
+                    }
+                    else if(x === 4){
+                        if(counter === 1 && ((dice.number === "six" && newArray[stockPosition] === 26) || newArray.includes("G" + (diceNumber[dice.number] - (26 - newArray[stockPosition]))))){
+                            audio.pause();
+                            return
+                        }
+                        newArray[stockPosition] = "G1";
+                    }
+                    else if(x === 4 && isNaN(newArray[stockPosition])){
+                        if(counter === 1 && (Number(newArray[stockPosition].substring(1)) + diceNumber[dice.number] > 5 || newArray.includes(newArray[stockPosition].substring(0, 1) + (Number(newArray[stockPosition].substring(1)) + diceNumber[dice.number])))){
+                            audio.pause();
+                            return;
+                        }
+                        newArray[stockPosition] = "G" + (Number(newArray[stockPosition].substring(1)) + 1);
+                    }*/
 
                     if(x === 1){
                         setAllStocks({...allStocks, player1: newArray})
