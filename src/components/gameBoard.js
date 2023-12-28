@@ -1,12 +1,13 @@
 import {useEffect, useState} from "react";
-import styled from "styled-components";
+import {Entry} from "../components";
+
 export const GameBoard = () => {
     const [currentPlayer, setCurrentPlayer] = useState(1);
     const [allStocks, setAllStocks] = useState({
-        player1: [23, 41, 5],
-        player2: [14, 18],
-        player3: [46, 29],
-        player4: [11]
+        player1: [23, 41, 5, 35],
+        player2: [14, 18, 51, 45],
+        player3: [46, 29, 12],
+        player4: [11, 40, 24]
     })
     const [checkHit, setCheckHit] = useState(false);
     const [moveAllow, setMoveAllow] = useState(true);
@@ -30,10 +31,7 @@ export const GameBoard = () => {
         3: "player3",
         4: "player4"
     }
-    const Entry = styled.div`
-        visibility: ${(props) => allStocks.player1.includes(props.number) || allStocks.player2.includes(props.number) || allStocks.player3.includes(props.number) || allStocks.player4.includes(props.number) ? "visible" : "hidden"};
-        background-color: ${(props) => allStocks.player1.includes(props.number) ? "gold" : allStocks.player2.includes(props.number) ? "red" : allStocks.player3.includes(props.number) ? "blue" : "springGreen"};
-`
+
     const rollDice = () => {
         const audio = new Audio("/rolling.mp3");
         audio.play();
@@ -63,6 +61,7 @@ export const GameBoard = () => {
         }, 1000)
     }
     const handleClickOnStock = (e) => {
+        if(!moveAllow) return
         if(currentPlayer === 1 && dice.number === "six" && e.target.id === "1"){
             e.target.style.display = "none";
             setAllStocks({...allStocks, player1: [...allStocks.player1, 41]})
@@ -238,18 +237,17 @@ export const GameBoard = () => {
                     setCurrentPlayer(currentPlayer + 1)
                     setDice({...dice, isRolling: false})
                 }
-                setMoveAllow(false)
             }
-            if(dice.number === "six"){
-                setMoveAllow(false)
+            else{
                 setDice({...dice, isRolling: false})
             }
+            setMoveAllow(false)
         }// eslint-disable-next-line
     }, [checkHit])
 
     const moveStock = (e, item) => {
         const stockPosition = allStocks[manageStocks[`${currentPlayer}`]].indexOf(item);
-        if(stockPosition === -1 || !moveAllow){
+        if(stockPosition === -1 || !moveAllow){ //moveAllow===false means you need to roll dice again for new movement!
             return;
         }
         function moveFunction(x){
@@ -258,10 +256,11 @@ export const GameBoard = () => {
             const interval = setInterval(() => {
                 setCheckHit(false);
                 if(counter <= diceNumber[dice.number]){
-                    audio = new Audio("/move.wav");
+                    audio = document.createElement('audio');
+                    audio.src = "/move.wav";
                     audio.play();
                     let newArray = allStocks[`player${x}`];
-                    if(counter === 1 && ((dice.number === "six" && newArray[stockPosition] === parkingEntrance[x]) || newArray.includes(currentLetter[x] + (diceNumber[dice.number] - (39 - newArray[stockPosition]))) || (isNaN(newArray[stockPosition]) && (Number(newArray[stockPosition].substring(1)) + diceNumber[dice.number] > 5 || newArray.includes(currentLetter[x] + (Number(newArray[stockPosition].substring(1)) + diceNumber[dice.number])))))){
+                    if(counter === 1 && ((dice.number === "six" && newArray[stockPosition] === parkingEntrance[x]) || newArray.includes(currentLetter[x] + (diceNumber[dice.number] - (parkingEntrance[x] - newArray[stockPosition]))) || (isNaN(newArray[stockPosition]) && (Number(newArray[stockPosition].substring(1)) + diceNumber[dice.number] > 5 || newArray.includes(currentLetter[x] + (Number(newArray[stockPosition].substring(1)) + diceNumber[dice.number])))))){
                         return audio.pause();
                     }
                     else if(newArray[stockPosition] === parkingEntrance[x]){
@@ -276,48 +275,6 @@ export const GameBoard = () => {
                             newArray[stockPosition] -= 52;
                         }
                     }
-                    /*else if(x === 2){
-                        if(counter === 1 && ((dice.number === "six" && newArray[stockPosition] === 52) || newArray.includes("R" + (diceNumber[dice.number] - (52 - newArray[stockPosition]))))){
-                            audio.pause();
-                            return
-                        }
-                        newArray[stockPosition] = "R1";
-                    }
-                    else if(x === 2 && isNaN(newArray[stockPosition])){
-                        if(counter === 1 && (Number(newArray[stockPosition].substring(1)) + diceNumber[dice.number] > 5 || newArray.includes(newArray[stockPosition].substring(0, 1) + (Number(newArray[stockPosition].substring(1)) + diceNumber[dice.number])))){
-                            audio.pause();
-                            return;
-                        }
-                        newArray[stockPosition] = "R" + (Number(newArray[stockPosition].substring(1)) + 1);
-                    }
-                    else if(x === 3){
-                        if(counter === 1 && ((dice.number === "six" && newArray[stockPosition] === 13) || newArray.includes("B" + (diceNumber[dice.number] - (13 - newArray[stockPosition]))))){
-                            audio.pause();
-                            return
-                        }
-                        newArray[stockPosition] = "B1";
-                    }
-                    else if(x === 3 && isNaN(newArray[stockPosition])){
-                        if(counter === 1 && (Number(newArray[stockPosition].substring(1)) + diceNumber[dice.number] > 5 || newArray.includes(newArray[stockPosition].substring(0, 1) + (Number(newArray[stockPosition].substring(1)) + diceNumber[dice.number])))){
-                            audio.pause();
-                            return;
-                        }
-                        newArray[stockPosition] = "B" + (Number(newArray[stockPosition].substring(1)) + 1);
-                    }
-                    else if(x === 4){
-                        if(counter === 1 && ((dice.number === "six" && newArray[stockPosition] === 26) || newArray.includes("G" + (diceNumber[dice.number] - (26 - newArray[stockPosition]))))){
-                            audio.pause();
-                            return
-                        }
-                        newArray[stockPosition] = "G1";
-                    }
-                    else if(x === 4 && isNaN(newArray[stockPosition])){
-                        if(counter === 1 && (Number(newArray[stockPosition].substring(1)) + diceNumber[dice.number] > 5 || newArray.includes(newArray[stockPosition].substring(0, 1) + (Number(newArray[stockPosition].substring(1)) + diceNumber[dice.number])))){
-                            audio.pause();
-                            return;
-                        }
-                        newArray[stockPosition] = "G" + (Number(newArray[stockPosition].substring(1)) + 1);
-                    }*/
 
                     if(x === 1){
                         setAllStocks({...allStocks, player1: newArray})
@@ -337,6 +294,9 @@ export const GameBoard = () => {
                     clearInterval(interval)
                     setCheckHit(true);
                 }
+                setTimeout(() => {
+                    audio.pause()
+                }, 100)
             }, 200)
         }
 
@@ -365,7 +325,7 @@ export const GameBoard = () => {
                 </div>
                 <div className="top-box">
                     {[51, 52, 1, 50, "R1", 2, 49, "R2", 3, 48, "R3", 4, 47, "R4", 5, 46, "R5", 6].map((item, index) => {
-                        return <div key={index}><Entry number={item} className="entry-stock" onClick={(e) => moveStock(e, item)}></Entry>{item}</div>
+                        return <div key={index}><Entry number={item} allstocks={allStocks} className="entry-stock" onClick={(e) => moveStock(e, item)}></Entry>{item}</div>
                     })}
                 </div>
                 <div className="player2-box" style={{outline: currentPlayer === 2 ? "solid black 4px" : "none"}}>
@@ -375,7 +335,7 @@ export const GameBoard = () => {
                 </div>
                 <div className="left-box">
                     {[40, 41, 42, 43, 44, 45, 39, "Y1", "Y2", "Y3", "Y4", "Y5", 38, 37, 36, 35, 34, 33].map((item, index) => {
-                        return <div key={index}><Entry number={item} className="entry-stock" onClick={(e) => moveStock(e, item)}></Entry>{item}</div>
+                        return <div key={index}><Entry number={item} allstocks={allStocks} className="entry-stock" onClick={(e) => moveStock(e, item)}></Entry>{item}</div>
                     })}
                 </div>
                 <div className="dice-box">
@@ -383,7 +343,7 @@ export const GameBoard = () => {
                 </div>
                 <div className="right-box">
                     {[7, 8, 9, 10, 11, 12, "B5", "B4", "B3", "B2", "B1", 13, 19, 18, 17, 16, 15, 14].map((item, index) => {
-                        return <div key={index}><Entry number={item} className="entry-stock" onClick={(e) => moveStock(e, item)}></Entry>{item}</div>
+                        return <div key={index}><Entry number={item} allstocks={allStocks} className="entry-stock" onClick={(e) => moveStock(e, item)}></Entry>{item}</div>
                     })}
                 </div>
                 <div className="player4-box" style={{outline: currentPlayer === 4 ? "solid black 4px" : "none"}}>
@@ -393,7 +353,7 @@ export const GameBoard = () => {
                 </div>
                 <div className="bottom-box">
                     {[32, "G5", 20, 31, "G4", 21, 30, "G3", 22, 29, "G2", 23, 28, "G1", 24, 27, 26, 25].map((item, index) => {
-                        return <div key={index}><Entry number={item} className="entry-stock" onClick={(e) => moveStock(e, item)}></Entry>{item}</div>
+                        return <div key={index}><Entry number={item} allstocks={allStocks} className="entry-stock" onClick={(e) => moveStock(e, item)}></Entry>{item}</div>
                     })}
                 </div>
                 <div className="player3-box" style={{outline: currentPlayer === 3 ? "solid black 4px" : "none"}}>
